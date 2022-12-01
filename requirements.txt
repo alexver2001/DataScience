@@ -1,0 +1,8 @@
+Flask
+Gunicorn
+numpy
+tensorflow
+pickle
+sklearn.preprocessing
+pandas
+os
