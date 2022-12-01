@@ -2,7 +2,6 @@ Flask
 Gunicorn
 numpy
 tensorflow
-pickle
-sklearn.preprocessing
+sklearn
 pandas
-os
+
