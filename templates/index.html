@@ -1,10 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Предсказание свойств</title>
+
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #0000FF;
+        }
+
+        li {
+            float: right;
+            }
+
+        li a {
+              display: block;
+              color: white;
+              text-align: center;
+              padding: 16px;
+              text-decoration: none;
+        }
+
+        li a:hover {
+              background-color: #0080FF;
+        }
+.table {
+	width: 100%;
+	border: 1px solid #000000;
+	margin-bottom: 20px;
+	border-collapse: separate;
+}
+.table thead th {
+	font-weight: bold;
+	text-align: center;
+	border: none;
+	padding: 10px 15px;
+	background: #66CDAA;
+	font-size: 14px;
+	border-top: 5px solid 	#000000;
+}
+.table tr th:first-child, .table tr td:first-child {
+	border-left: 1px solid #000000;
+}
+.table tr th:last-child, .table tr td:last-child {
+	border-right: 1px solid #000000;
+}
+.table tr td:nth-child(13) {
+	background: #9370DB;
+}.table tr td:nth-child(14) {
+	background: #9370DB;
+}
+.table thead tr th:first-child {
+	border-radius: 20px 0 0 0;
+}
+.table thead tr th:last-child {
+	border-radius: 0 20px 0 0;
+}
+.table tbody td {
+	text-align: center;
+	border: 1px solid #000000;
+	padding: 10px 15px;
+	font-size: 14px;
+	vertical-align: top;
+}
+.table tbody tr {
+	background: #F8F8F8;
+}
+.table tbody tr:last-child td{
+	border-bottom: 5px solid #000000;
+}
+.table tbody tr:last-child td:first-child {
+	border-radius: 0 0 0 20px;
+}
+.table tbody tr:last-child td:last-child {
+	border-radius: 0 0 20px 0;
+}
+.container {
+                     width: 50%;
+                     align: right
+                     padding: 20px 30px;
+                     margin-left: auto;
+                     margin-right: auto;
+                     display: flex;
+                     justify-content: space-around;
+
+                    }
+
+    </style>
+
 </head>
-<body>
-$END$
+<body bgcolor="#E0FFFF">
+     <ul>
+
+          <li><a href="/about" >О программе</a></li>
+          <li><a href="/save_results">Сохранить результат</a></li>
+          <li><a href="/clear_results">Очистить результат</a></li>
+    </ul>
+     <br>
+    <form action = "/Predict" method = "POST">
+
+    <fieldset>
+        <legend align="center" style="font-size:20px; font-weight: bold; color: blue"> <b>Введите значения, для которых надо спрогнозировать свойства композитных материалов</b> </legend>
+           <br>
+            <table class="table">
+             <thead>
+                <tr>
+                    {% for m in Columns_input %}
+                        <th>{{m}}</th>
+                    {% endfor %}
+                </tr>
+             </thead>
+             <tr>
+                {% for dec in Name_InParam %}
+                    <td>
+                       {% if dec=='Param_9' %}
+                            <select name={{dec}}>
+                                <option value="0">0 град</option>
+                                <option value="1" selected>90 град</option>
+                            </select>
+                       {% else %}
+                            <input type="text" name ={{dec}} type = "number" size="10" required>
+                       {% endif %}
+                    </td>
+                {% endfor %}
+             </tr>
+            </table>
+    </fieldset>
+           <br>
+        <div class="container">
+        <input type = "submit" value="Рассчитать" style="width: 20em; height:2em; font-size:20px; font-weight: bold">
+        <input type = "reset" value="Очистить форму" style="width: 20em; height:2em; font-size:20px; font-weight: bold">
+
+     </div>
+        <br>
+     <fieldset>
+        <legend align="center" style="font-size:20px; font-weight: bold; color: blue"> <b>Результат прогноза свойств композитных материалов</b>  </legend>
+               <br>
+             <table class="table">
+               <thead>
+                <tr>
+                    {% for m in Columns_output %}
+                        <th>{{m}}</th>
+                    {% endfor %}
+                </tr>
+               </thead>
+                <tr>
+                    {% for dec in Predict_Value %}
+                        <td>
+                             {{dec}}
+                        </td>
+                    {% endfor %}
+             </tr>
+            </table>
+     </fieldset>
+        <br>
+
+</form>
+
+
+    <h2 align="center" style=" font-weight: bold; color: blue"> <b>Таблица результатов прогноза</b>  </h2>
+
+
+
+<div>
+    {{ Data_Predict.to_html(classes = 'table') | safe}}
+</div>
 </body>
 </html>
